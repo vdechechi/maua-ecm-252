@@ -9,6 +9,7 @@ class App extends React.Component {
       estacoes: null,
       data: null,
       icone: null,
+      mensagemErro: null
     };
   }
   estacoes = {
@@ -64,7 +65,9 @@ class App extends React.Component {
         });
       },
       (erro) => {
-        console.log(erro);
+        this.setState({
+          mensagemErro: "Não foi possível obter a localização",
+        });
       }
     );
   };
@@ -99,7 +102,11 @@ class App extends React.Component {
                     {this.state.latitude
                       ? `Coordenadas: ${this.state.latitude}, ${this.state.longitude},
                           Data: ${this.state.data}`
-                      : "Clique no botão para saber a estação"}
+                      :
+
+                      this.state.mensagemErro
+                        ? this.state.mensagemErro
+                        : "Clique no botão para saber a estação"}
                   </p>
                 </div>
                 <button type="button"
